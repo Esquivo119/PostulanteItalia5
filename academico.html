@@ -133,10 +133,11 @@ footer {
             <p>Aquí podrás cargar y visualizar documentos académicos en formato PDF.</p>
 
             <!-- Formulario para cargar archivos -->
-            <form id="pdf-form" enctype="multipart/form-data">
-                <input type="file" id="pdf-upload" accept="application/pdf" />
-                <button type="submit">Cargar PDF</button>
+            <form id="pdf-form">
+                <input type="file" id="pdf-upload" accept="application/pdf">
+                <button type="submit">Subir PDF</button>
             </form>
+            <div class="pdf-container" id="pdf-list"></div>
             <button onclick="verVolver()">Volver al Inicio</button>
 
 
