@@ -1,68 +1,114 @@
-// Función para manejar la carga de archivos PDF
-document.getElementById('pdf-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evitar el envío del formulario
+// Abrir conexión a IndexedDB
+const dbName = "PDFDatabase";
+let db;
 
-    const fileInput = document.getElementById('pdf-upload');
-    const pdfFile = fileInput.files[0];
+function initDB() {
+    const request = indexedDB.open(dbName, 1);
 
-    if (pdfFile && pdfFile.type === "application/pdf") {
-        const reader = new FileReader();
-        
-        reader.onload = function(e) {
-            const pdfURL = e.target.result;
-            savePDFToLocalStorage(pdfURL);
+    request.onupgradeneeded = function (event) {
+        db = event.target.result;
+        if (!db.objectStoreNames.contains("pdfs")) {
+            db.createObjectStore("pdfs", { autoIncrement: true });
+        }
+    };
+
+    request.onsuccess = function (event) {
+        db = event.target.result;
+        displayPDFs();
+    };
+
+    request.onerror = function () {
+        console.error("Error al abrir la base de datos.");
+    };
+}
+
+// Guardar PDF en IndexedDB
+function savePDFToDB(pdfFile) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+        const transaction = db.transaction(["pdfs"], "readwrite");
+        const store = transaction.objectStore("pdfs");
+        const pdfData = {
+            name: pdfFile.name,
+            data: e.target.result,
+        };
+        store.add(pdfData);
+
+        transaction.oncomplete = function () {
             displayPDFs();
         };
 
-        reader.readAsDataURL(pdfFile);
+        transaction.onerror = function () {
+            console.error("Error al guardar el PDF.");
+        };
+    };
+
+    reader.readAsDataURL(pdfFile);
+}
+
+// Mostrar PDFs guardados
+function displayPDFs() {
+    const pdfList = document.getElementById("pdf-list");
+    pdfList.innerHTML = "";
+
+    const transaction = db.transaction(["pdfs"], "readonly");
+    const store = transaction.objectStore("pdfs");
+    const request = store.openCursor();
+
+    request.onsuccess = function (event) {
+        const cursor = event.target.result;
+        if (cursor) {
+            const pdfItem = document.createElement("div");
+            pdfItem.classList.add("pdf-item");
+            pdfItem.innerHTML = `
+                <p><strong>${cursor.value.name}</strong></p>
+                <iframe src="${cursor.value.data}"></iframe>
+                <button onclick="deletePDF(${cursor.key})">Eliminar</button>
+            `;
+            pdfList.appendChild(pdfItem);
+            cursor.continue();
+        } else if (!pdfList.innerHTML) {
+            pdfList.innerHTML = "<p>No hay PDFs guardados.</p>";
+        }
+    };
+
+    request.onerror = function () {
+        console.error("Error al cargar los PDFs.");
+    };
+}
+
+// Eliminar PDF de IndexedDB
+function deletePDF(key) {
+    const transaction = db.transaction(["pdfs"], "readwrite");
+    const store = transaction.objectStore("pdfs");
+    const request = store.delete(key);
+
+    request.onsuccess = function () {
+        displayPDFs();
+    };
+
+    request.onerror = function () {
+        console.error("Error al eliminar el PDF.");
+    };
+}
+
+// Manejar el envío del formulario
+document.getElementById("pdf-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const fileInput = document.getElementById("pdf-upload");
+    const pdfFile = fileInput.files[0];
+
+    if (pdfFile && pdfFile.type === "application/pdf") {
+        savePDFToDB(pdfFile);
     } else {
         alert("Por favor, selecciona un archivo PDF válido.");
     }
 });
 
-// Guardar el PDF en el almacenamiento local
-function savePDFToLocalStorage(pdfURL) {
-    let pdfs = JSON.parse(localStorage.getItem('pdfs')) || [];
-    pdfs.push(pdfURL);
-    localStorage.setItem('pdfs', JSON.stringify(pdfs));
-}
-
-// Mostrar los PDFs guardados en el almacenamiento local
-function displayPDFs() {
-    const pdfList = document.getElementById('pdf-list');
-    pdfList.innerHTML = ''; // Limpiar la lista antes de mostrar los nuevos archivos
-
-    const pdfs = JSON.parse(localStorage.getItem('pdfs')) || [];
-
-    if (pdfs.length === 0) {
-        pdfList.innerHTML = "<p>No hay PDFs cargados.</p>";
-    } else {
-        pdfs.forEach((pdfURL, index) => {
-            const pdfItem = document.createElement('div');
-            pdfItem.classList.add('pdf-item');
-            pdfItem.innerHTML = `
-                <p><strong>Documento ${index + 1}</strong></p>
-                <iframe src="${pdfURL}" width="100%" height="400px"></iframe>
-                <button onclick="deletePDF(${index})">Eliminar</button>
-            `;
-            pdfList.appendChild(pdfItem);
-        });
-    }
-}
-
-// Eliminar un PDF del almacenamiento local
-function deletePDF(index) {
-    let pdfs = JSON.parse(localStorage.getItem('pdfs')) || [];
-    pdfs.splice(index, 1); // Eliminar el archivo en el índice especificado
-    localStorage.setItem('pdfs', JSON.stringify(pdfs)); // Guardar la lista actualizada
-    displayPDFs(); // Actualizar la lista de documentos
-}
-
-// Al cargar la página, mostrar los PDFs guardados
-window.onload = function() {
-    displayPDFs();
-};
 function verVolver() {
     window.location.href = 'index.html';
 }
 
+// Inicializar la base de datos al cargar la página
+window.onload = initDB;
