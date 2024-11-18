@@ -4,131 +4,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        /* Estilo básico para toda la página */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff; /* Blanco */
+        }
+
+        /* Contenedor general */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        /* Encabezado */
+        header {
+            background-color: #008000; /* Verde */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sección de contenido */
+        .section {
+            padding: 40px 0;
+            background-color: #ecf0f1; /* Gris claro */
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #ff0000; /* Rojo */
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        form input[type="file"] {
+            margin-right: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #008000; /* Verde */
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        form button:hover {
+            background-color: #ff0000; /* Rojo */
+        }
+
+        /* Botón adicional */
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #ff0000; /* Rojo */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #008000; /* Verde */
+        }
+
+        /* Contenedor de PDFs */
+        #pdf-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        iframe {
+            border: 2px solid #008000; /* Verde */
+            border-radius: 5px;
+            width: 100%;
+            max-width: 100%;
+            height: 400px;
+        }
+
+        footer {
+            background-color: #008000; /* Verde */
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            iframe {
+                height: 250px; /* Menor altura en pantallas más pequeñas */
+            }
+        }
+    </style>
 </head>
-<style>
-/* Estilo básico para toda la página */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff; /* Blanco */
-}
-
-/* Contenedor general */
-.container {
-    width: 80%;
-    margin: 0 auto;
-}
-
-/* Encabezado */
-header {
-    background-color: #008000; /* Verde */
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 36px;
-}
-
-nav ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-nav ul li a:hover {
-    text-decoration: underline;
-}
-
-/* Sección de contenido */
-.section {
-    padding: 40px 0;
-    background-color: #ecf0f1; /* Gris claro */
-}
-
-h2 {
-    font-size: 28px;
-    color: #ff0000; /* Rojo */
-    margin-bottom: 20px;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-form input[type="file"] {
-    margin-right: 10px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-form button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #008000; /* Verde */
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-
-form button:hover {
-    background-color: #ff0000; /* Rojo */
-}
-
-/* Botón adicional */
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #ff0000; /* Rojo */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #008000; /* Verde */
-}
-
-/* Contenedor de PDFs */
-#pdf-container {
-    margin-top: 20px;
-    text-align: center;
-}
-
-iframe {
-    border: 2px solid #008000; /* Verde */
-    border-radius: 5px;
-}
-
-footer {
-    background-color: #008000; /* Verde */
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-    margin-top: 40px;
-}
-
-</style>
 <body>
     <!-- Sección para cargar y visualizar PDFs -->
     <section id="documentos" class="section">
         <div class="container">
+            <header>
+                <h1>Gestión de Documentos Académicos</h1>
+            </header>
+
             <h2>Sube tus documentos PDF</h2>
             <p>Aquí podrás cargar y visualizar documentos académicos en formato PDF.</p>
 
@@ -136,17 +148,22 @@ footer {
             <form id="pdf-form">
                 <input type="file" id="pdf-upload" accept="application/pdf">
                 <button type="submit">Subir PDF</button>
+                <button onclick="verVolver()">Volver al Inicio</button>
             </form>
-            <div class="pdf-container" id="pdf-list"></div>
-            <button onclick="verVolver()">Volver al Inicio</button>
-
 
             <!-- Contenedor para mostrar los PDFs cargados -->
             <h3>Documentos Cargados:</h3>
             <div id="pdf-list"></div>
 
+    
+
         </div>
     </section>
+
+    <footer>
+        <p>&copy; 2024 Academia de Documentos</p>
+    </footer>
+
     <script src="scriptACADEMICO.js"></script>
 </body>
 </html>
