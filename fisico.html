@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+/* Estilo básico para toda la página */
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff; /* Blanco */
+        }
+
+        /* Contenedor general */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        /* Encabezado */
+        header {
+            background-color: #008000; /* Verde */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sección */
+        .section {
+            padding: 40px 0;
+            background-color: #ecf0f1; /* Gris claro */
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #ff0000; /* Rojo */
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 22px;
+            color: #008000; /* Verde */
+        }
+
+        ul {
+            list-style-type: square;
+            margin-left: 20px;
+        }
+
+        /* Ejemplos de ejercicios */
+        .ejemplo {
+            margin-bottom: 30px;
+        }
+
+        .ejemplo img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+            border: 2px solid #008000; /* Verde */
+        }
+
+        /* Botones */
+        button {
+            background-color: #ff0000; /* Rojo */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #008000; /* Verde */
+        }
+
+        /* Pie de página */
+        footer {
+            background-color: #008000; /* Verde */
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+    </style>
+    <script>
+        document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function() {
+        alert('Redirigiendo...');
+    });
+});
+function verVolver() {
+            window.location.href = 'index.html';
+        }
+
+    </script>
+
+     <section id="entrenamientos" class="section">
+        <div class="container">
+            <h2>Entrenamientos para Mejorar tu Condición Física</h2>
+            <p>Estos entrenamientos están diseñados para mejorar tu resistencia, fuerza y flexibilidad.</p>
+            
+<div class="entrenamiento">
+    <h3>Entrenamiento de Resistencia</h3>
+    <ul>
+        <li>Correr 30 minutos</li>
+        <li>Remo 20 minutos</li>
+        <li>Ciclismo 40 minutos</li>
+    </ul>
+</div>
+
+<div class="entrenamiento">
+    <h3>Entrenamiento de Fuerza</h3>
+    <ul>
+        <li>Flexiones: 3 series de 15 repeticiones</li>
+        <li>Sentadillas: 3 series de 20 repeticiones</li>
+        <li>Pesas (con mancuernas): 3 series de 12 repeticiones</li>
+    </ul>
+</div>
+
+<div class="entrenamiento">
+    <h3>Entrenamiento de Flexibilidad</h3>
+    <ul>
+        <li>Estiramientos de piernas: 3 minutos por pierna</li>
+        <li>Estiramiento de brazos: 2 minutos</li>
+        <li>Postura del perro hacia abajo (Yoga): 3 minutos</li>
+    </ul>
+</div>
+</div>
+</section>
+
+<!-- Sección de Ejemplos de Ejercicios -->
+<section id="ejemplos" class="section">
+<div class="container">
+<h2>Ejemplos de Ejercicios</h2>
+<div class="ejemplo">
+    <h3>Flexiones</h3>
+    <p>Las flexiones son excelentes para trabajar el pecho, los hombros y los tríceps.</p>
+    <img src="flexiones.jpg" alt="Ejemplo de Flexiones">
+</div>
+
+<div class="ejemplo">
+    <h3>Sentadillas</h3>
+    <p>Las sentadillas son un excelente ejercicio para las piernas y los glúteos.</p>
+    <img src="sentadilla.jpg" alt="Ejemplo de Sentadillas">
+</div>
+
+<div class="ejemplo">
+    <h3>Estiramiento de Piernas</h3>
+    <p>Este estiramiento mejora la flexibilidad y reduce el riesgo de lesiones.</p>
+    <img src="estiramiento.jpg" alt="Ejemplo de Estiramiento de Piernas">
+</div>
+<button onclick="verVolver()">Volver al Inicio</button>
+</div>
+</section>
+
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imágenes Guardadas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+        .image-container {
+            background-color: #f0f4f8;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .image-container img {
+            max-width: 100%;
+            border-radius: 4px;
+        }
+        .image-date {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
+        }
+    </style>
+    <script>
+        // Función para mostrar todas las imágenes guardadas con su fecha/hora
+        function mostrarImagenesGuardadas() {
+            const imagenesGuardadas = JSON.parse(localStorage.getItem("imagenesGuardadas")) || [];
+            const galeria = document.getElementById('gallery');
+
+            if (imagenesGuardadas.length === 0) {
+                galeria.innerHTML = "<p>No hay imágenes guardadas.</p>";
+                return;
+            }
+
+            // Crear un contenedor para cada imagen
+            imagenesGuardadas.forEach(imagenData => {
+                const container = document.createElement('div');
+                container.classList.add('image-container');
+
+                const img = document.createElement('img');
+                img.src = imagenData.imagen;
+                img.alt = "Imagen guardada";
+
+                const fecha = document.createElement('p');
+                fecha.classList.add('image-date');
+                fecha.textContent = imagenData.fechaHora;
+
+                container.appendChild(img);
+                container.appendChild(fecha);
+                galeria.appendChild(container);
+            });
+        }
+
+        // Ejecutar la función al cargar la página
+        window.onload = mostrarImagenesGuardadas;
+    </script>
+</head>
+<body>
+    <h1>Imágenes Guardadas</h1>
+    <div id="gallery" class="gallery">
+        <!-- Las imágenes guardadas se mostrarán aquí -->
+    </div>
+    <a href="mantenimiento.html">
+        <button>Volver</button>
+    </a>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Imágenes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        input, textarea, button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-width: 400px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script>
+        function guardarImagenTexto() {
+            const archivoInput = document.getElementById('archivo');
+            const textoInput = document.getElementById('texto');
+
+            if (archivoInput.files.length > 0 && textoInput.value.trim() !== '') {
+                const lector = new FileReader();
+                lector.onload = function (e) {
+                    const imagenGuardada = e.target.result;
+                    const textoGuardado = textoInput.value.trim();
+
+                    const nuevoElemento = { imagen: imagenGuardada, texto: textoGuardado };
+
+                    let elementosGuardados = JSON.parse(localStorage.getItem("elementosGuardados")) || [];
+                    elementosGuardados.push(nuevoElemento);
+                    localStorage.setItem("elementosGuardados", JSON.stringify(elementosGuardados));
+
+                    alert("Imagen y texto guardados correctamente.");
+                    textoInput.value = '';
+                    archivoInput.value = '';
+                };
+                lector.readAsDataURL(archivoInput.files[0]);
+            } else {
+                alert("Por favor, selecciona una imagen y escribe un texto.");
+            }
+        }
+
+        function verImagenes() {
+            window.location.href = 'imagen.html';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Subir Imágenes</h1>
+        <input type="file" id="archivo" accept="image/*">
+        <textarea id="texto" rows="4" placeholder="Escribe un texto para esta imagen"></textarea>
+        <button onclick="guardarImagenTexto()">Guardar</button>
+        <button onclick="verImagenes()">Ver Imágenes</button>
+    </div>
+</body>
+</html>

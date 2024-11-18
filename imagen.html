@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imágenes Guardadas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffffff; /* Blanco */
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            background-color: #d32f2f; /* Rojo */
+            color: white;
+            padding: 15px 0;
+            margin: 0;
+            border-bottom: 5px solid #388e3c; /* Verde */
+        }
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 20px auto;
+        }
+        .item {
+            background: #ffffff; /* Blanco */
+            border: 3px solid #388e3c; /* Verde */
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        p {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #d32f2f; /* Rojo */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #b71c1c; /* Rojo más oscuro */
+        }
+    </style>
+    <script>
+        function cargarGaleria() {
+            const galeria = document.getElementById('galeria');
+            const elementosGuardados = JSON.parse(localStorage.getItem("elementosGuardados")) || [];
+
+            if (elementosGuardados.length === 0) {
+                galeria.innerHTML = "<p>No hay imágenes guardadas.</p>";
+                return;
+            }
+
+            galeria.innerHTML = '';
+            elementosGuardados.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('item');
+
+                const img = document.createElement('img');
+                img.src = item.imagen;
+                img.alt = "Imagen cargada";
+
+                const p = document.createElement('p');
+                p.textContent = item.texto;
+
+                div.appendChild(img);
+                div.appendChild(p);
+                galeria.appendChild(div);
+            });
+        }
+
+        function volverSubir() {
+            window.location.href = 'subir.html';
+        }
+
+        window.onload = cargarGaleria;
+        function verVolver() {
+    window.location.href = 'index.html';
+}
+    </script>
+</head>
+<body>
+    <h1>Imagenes Subidas</h1>
+    <div class="galeria" id="galeria"></div>
+    <button onclick="volverSubir()">Subir Más Imágenes</button>
+    <button onclick="verVolver()">Volver al Inicio</button>
+</body>
+</html>
