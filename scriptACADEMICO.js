@@ -50,7 +50,7 @@ function savePDFToDB(pdfFile) {
 // Mostrar PDFs guardados
 function displayPDFs() {
     const pdfList = document.getElementById("pdf-list");
-    pdfList.innerHTML = "";
+    pdfList.innerHTML = "";  // Limpiar la lista antes de mostrar los nuevos archivos
 
     const transaction = db.transaction(["pdfs"], "readonly");
     const store = transaction.objectStore("pdfs");
@@ -63,7 +63,7 @@ function displayPDFs() {
             pdfItem.classList.add("pdf-item");
             pdfItem.innerHTML = `
                 <p><strong>${cursor.value.name}</strong></p>
-                <iframe src="${cursor.value.data}"></iframe>
+                <iframe src="${cursor.value.data}" title="${cursor.value.name}"></iframe>
                 <button onclick="deletePDF(${cursor.key})">Eliminar</button>
             `;
             pdfList.appendChild(pdfItem);
